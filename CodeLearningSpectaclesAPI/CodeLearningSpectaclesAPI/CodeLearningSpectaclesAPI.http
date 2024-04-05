@@ -1,0 +1,6 @@
+@CodeLearningSpectaclesAPI_HostAddress = http://localhost:7107
+
+GET {{CodeLearningSpectaclesAPI_HostAddress}}/api/Codeconstructs
+Accept: application/json
+
+###
