@@ -31,7 +31,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: ${{ secrets.AWS_ROLE }}
-          role-session-name: GITHUB_ACTION_RDS
+          role-session-name: GITHUB_ACTION_EBS
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Validate Identity with AWS
