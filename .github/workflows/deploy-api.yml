@@ -1,0 +1,37 @@
+name: Deploy API to AWS Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      APP_NAME: "code-learning-api"
+      ENV_NAME: "Development"
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "8.0"
+
+      - name: Build and Publish
+        run: dotnet publish -c Release -o publish
+
+      - name: Configure AWS credentials
+        run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} && aws configure set region ${{ env.AWS_REGION }}
+
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          aws elasticbeanstalk create-application-version --application-name ${{ env.APP_NAME }} --version-label $(date +'%Y%m%d%H%M%S') --source-bundle S3Bucket="your-s3-bucket",S3Key="publish.zip"
+          aws elasticbeanstalk update-environment --application-name ${{ env.APP_NAME }} --environment-name ${{ env.ENV_NAME }} --version-label $(date +'%Y%m%d%H%M%S')
