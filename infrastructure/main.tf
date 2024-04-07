@@ -9,7 +9,7 @@ terraform {
   required_version = ">= 1.7.4"
 
   backend "s3" {
-    bucket = "code_learning-state-bucket"
+    bucket = "code-learning-beanstalk-bucket"
     key = "infrastructure/api/state-files"
     region = "eu-west-1"
   }
