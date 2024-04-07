@@ -9,7 +9,7 @@ terraform {
   required_version = ">= 1.7.4"
 
   backend "s3" {
-    bucket = "code-learning-beanstalk-bucket"
+    bucket = "code-learning-state-bucket"
     key = "infrastructure/api/state-files"
     region = "eu-west-1"
   }
@@ -139,7 +139,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
 
 # S3 bucket to store jar
 resource "aws_s3_bucket" "beanstalk_bucket" {
-  bucket = "code-learning-beanstalk-bucket"
+  bucket = "code-learning-state-bucket"
 }
 
 # Add .exe to bucket
