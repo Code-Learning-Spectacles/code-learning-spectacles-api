@@ -1,22 +1,30 @@
-name: Deploy API to AWS Elastic Beanstalk
+name: "Deploy API"
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     env:
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      APP_NAME: "code-learning-api"
-      ENV_NAME: "Development"
-
+      TF_VAR_AWS_RDS_ENDPOINT: ${{ secrets.AWS_RDS_ENDPOINT }}
+      TF_VAR_DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      TF_VAR_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      TF_VAR_DB_PORT: ${{ secrets.DB_PORT }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -38,7 +46,27 @@ jobs:
         working-directory: ./infrastructure
         run: aws sts get-caller-identity
 
-      - name: Deploy to Elastic Beanstalk
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Initialize Terraform
+        id: init
+        working-directory: ./infrastructure
+        run: terraform init
+
+      - name: Generate infrastructure plan
+        id: plan
+        working-directory: ./infrastructure
+        run: terraform plan -out=.tfplan
+
+      - name: Apply infrastructure plan
+        id: apply
+        working-directory: ./infrastructure
+        run: terraform apply .tfplan
+
+      - name: Create new version
+        id: new-version
         run: |
-          aws elasticbeanstalk create-application-version --application-name ${{ env.APP_NAME }} --version-label $(date +'%Y%m%d%H%M%S') --source-bundle S3Bucket="your-s3-bucket",S3Key="publish.zip"
-          aws elasticbeanstalk update-environment --application-name ${{ env.APP_NAME }} --environment-name ${{ env.ENV_NAME }} --version-label $(date +'%Y%m%d%H%M%S')
+          version_label="app-$(date +'%Y%m%d%H%M%S')"
+          aws elasticbeanstalk create-application-version --application-name beantastic-api --version-label "$version_label" --region eu-west-1 --source-bundle S3Bucket="beantastic-beanstalk-bucket",S3Key="beanstalk-api.jar"
+          aws elasticbeanstalk update-environment --application-name beantastic-api --environment-name production  --region eu-west-1 --version-label "$version_label"
