@@ -26,6 +26,7 @@ jobs:
           dotnet-version: "8.0"
 
       - name: Build and Publish
+        working-directory: "./CodeLearningSpectaclesAPI"
         run: dotnet publish -c Release -o publish
 
       - name: Configure AWS credentials
