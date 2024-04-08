@@ -10,7 +10,7 @@ using CodeLearningSpectaclesAPI.Models;
 
 namespace CodeLearningSpectaclesAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class LanguageconstructsController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace CodeLearningSpectaclesAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Languageconstruct>>> GetLanguageconstructs()
         {
-            return await _context.Languageconstructs.ToListAsync();
+            return Ok(await _context.Languageconstructs.ToListAsync());
         }
 
         // GET: api/Languageconstructs/5
@@ -39,7 +39,7 @@ namespace CodeLearningSpectaclesAPI.Controllers
                 return NotFound();
             }
 
-            return languageconstruct;
+            return Ok(languageconstruct);
         }
 
         // PUT: api/Languageconstructs/5
