@@ -42,10 +42,6 @@ public partial class CodeLearningDbContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("name");
 
-            entity.HasOne(d => d.Constructtype).WithMany(p => p.Codeconstructs)
-                .HasForeignKey(d => d.Constructtypeid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("codeconstruct_constructtypeid_fkey");
         });
 
         modelBuilder.Entity<Codinglanguage>(entity =>
@@ -84,16 +80,6 @@ public partial class CodeLearningDbContext : DbContext
             entity.Property(e => e.Construct)
                 .HasMaxLength(1000)
                 .HasColumnName("construct");
-
-            entity.HasOne(d => d.Codeconstruct).WithMany(p => p.Languageconstructs)
-                .HasForeignKey(d => d.Codeconstructid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("languageconstruct_codeconstructid_fkey");
-
-            entity.HasOne(d => d.Codinglanguage).WithMany(p => p.Languageconstructs)
-                .HasForeignKey(d => d.Codinglanguageid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("languageconstruct_codinglanguageid_fkey");
         });
 
         modelBuilder.Entity<Profile>(entity =>
@@ -121,15 +107,6 @@ public partial class CodeLearningDbContext : DbContext
                 .HasColumnName("notes");
             entity.Property(e => e.Profileid).HasColumnName("profileid");
 
-            entity.HasOne(d => d.Languageconstruct).WithMany(p => p.Profilelanguageconstructs)
-                .HasForeignKey(d => d.Languageconstructid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("profilelanguageconstruct_languageconstructid_fkey");
-
-            entity.HasOne(d => d.Profile).WithMany(p => p.Profilelanguageconstructs)
-                .HasForeignKey(d => d.Profileid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("profilelanguageconstruct_profileid_fkey");
         });
 
         OnModelCreatingPartial(modelBuilder);

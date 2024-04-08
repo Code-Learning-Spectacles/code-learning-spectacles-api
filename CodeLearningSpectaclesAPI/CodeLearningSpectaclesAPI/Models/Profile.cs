@@ -9,5 +9,4 @@ public partial class Profile
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<Profilelanguageconstruct> Profilelanguageconstructs { get; set; } = new List<Profilelanguageconstruct>();
 }

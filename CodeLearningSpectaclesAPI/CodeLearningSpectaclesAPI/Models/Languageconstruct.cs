@@ -13,9 +13,4 @@ public partial class Languageconstruct
 
     public string Construct { get; set; } = null!;
 
-    public virtual Codeconstruct Codeconstruct { get; set; } = null!;
-
-    public virtual Codinglanguage Codinglanguage { get; set; } = null!;
-
-    public virtual ICollection<Profilelanguageconstruct> Profilelanguageconstructs { get; set; } = new List<Profilelanguageconstruct>();
 }

@@ -11,7 +11,4 @@ public partial class Codeconstruct
 
     public string Name { get; set; } = null!;
 
-    public virtual Constructtype Constructtype { get; set; } = null!;
-
-    public virtual ICollection<Languageconstruct> Languageconstructs { get; set; } = new List<Languageconstruct>();
 }

@@ -13,7 +13,4 @@ public partial class Profilelanguageconstruct
 
     public string? Notes { get; set; }
 
-    public virtual Languageconstruct Languageconstruct { get; set; } = null!;
-
-    public virtual Profile Profile { get; set; } = null!;
 }

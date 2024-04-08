@@ -8,6 +8,4 @@ public partial class Constructtype
     public int Constructtypeid { get; set; }
 
     public string Name { get; set; } = null!;
-
-    public virtual ICollection<Codeconstruct> Codeconstructs { get; set; } = new List<Codeconstruct>();
 }
