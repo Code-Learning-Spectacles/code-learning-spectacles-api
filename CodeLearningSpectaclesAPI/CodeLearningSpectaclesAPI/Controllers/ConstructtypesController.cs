@@ -10,7 +10,7 @@ using CodeLearningSpectaclesAPI.Models;
 
 namespace CodeLearningSpectaclesAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ConstructtypesController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace CodeLearningSpectaclesAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Constructtype>>> GetConstructtypes()
         {
-            return await _context.Constructtypes.ToListAsync();
+            return Ok(await _context.Constructtypes.ToListAsync());
         }
 
         // GET: api/Constructtypes/5
@@ -39,7 +39,7 @@ namespace CodeLearningSpectaclesAPI.Controllers
                 return NotFound();
             }
 
-            return constructtype;
+            return Ok(constructtype);
         }
 
         // PUT: api/Constructtypes/5
