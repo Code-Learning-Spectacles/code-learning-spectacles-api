@@ -12,7 +12,7 @@ using CodeLearningSpectaclesAPI.Auth;
 
 namespace CodeLearningSpectaclesAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class CodeconstructsController : ControllerBase
     {
@@ -32,7 +32,7 @@ namespace CodeLearningSpectaclesAPI.Controllers
                 string username = userObj.login;
                 // TODO: Return only items for user
             }
-            return await _context.Codeconstructs.ToListAsync();
+            return Ok(await _context.Codeconstructs.ToListAsync());
         }
 
         // GET: api/Codeconstructs/5
@@ -46,7 +46,7 @@ namespace CodeLearningSpectaclesAPI.Controllers
                 return NotFound();
             }
 
-            return codeconstruct;
+            return Ok(codeconstruct);
         }
 
         // PUT: api/Codeconstructs/5
