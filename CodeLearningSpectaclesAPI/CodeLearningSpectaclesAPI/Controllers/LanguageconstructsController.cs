@@ -42,6 +42,16 @@ namespace CodeLearningSpectaclesAPI.Controllers
             return Ok(languageconstruct);
         }
 
+        // GET: api/Languageconstructs/ByLanguage/5
+        [HttpGet("getByLanguage/{languageId}")]
+        public async Task<ActionResult<IEnumerable<Languageconstruct>>> GetLanguageconstructsByLanguage(int languageId)
+        {
+            var languageConstructs = await _context.Languageconstructs
+                                                .Where(l => l.Codinglanguageid == languageId)
+                                                .ToListAsync();
+            return Ok(languageConstructs);
+        }
+
         // PUT: api/Languageconstructs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
