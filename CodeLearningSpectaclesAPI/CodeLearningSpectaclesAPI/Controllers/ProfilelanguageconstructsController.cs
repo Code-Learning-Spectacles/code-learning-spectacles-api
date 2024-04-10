@@ -28,6 +28,16 @@ namespace CodeLearningSpectaclesAPI.Controllers
             return Ok(await _context.Profilelanguageconstructs.ToListAsync());
         }
 
+        // GET: api/Profilelanguageconstructs/getByProfile/5
+        [HttpGet("getByProfile/{profileId}")]
+        public async Task<ActionResult<IEnumerable<Profilelanguageconstruct>>> GetProfilelanguageconstructsByProfile(int profileId)
+        {
+            var profileLanguageConstructs = await _context.Profilelanguageconstructs
+                                                .Where(p => p.Profileid == profileId)
+                                                .ToListAsync();
+            return Ok(profileLanguageConstructs);
+        }
+
         // GET: api/Profilelanguageconstructs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Profilelanguageconstruct>> GetProfilelanguageconstruct(int id)
