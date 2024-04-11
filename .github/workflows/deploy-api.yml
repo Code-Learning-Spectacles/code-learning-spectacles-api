@@ -36,6 +36,14 @@ jobs:
         working-directory: "./CodeLearningSpectaclesAPI"
         run: dotnet publish -c Release -o publish
 
+      - name: Update Release with .env
+        run: |
+          echo "SERVER=${{secrets.DB_HOST_DEV}}" > publish/.env
+          echo "USER_ID=${{secrets.DB_DEV_USERNAME}}" >> publish/.env
+          echo "PASSWORD=${{secrets.DB_DEV_PASSWORD }}" >> publish/.env
+          echo "DATABASE=codeLearningDB" >> publish/.env
+          echo "PORT=${{secrets.DB_PORT}}" >> publish/.env
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
@@ -46,14 +54,6 @@ jobs:
       - name: Validate Identity with AWS
         working-directory: ./infrastructure
         run: aws sts get-caller-identity
-
-      - name: Update Release with .env
-        run: |
-          echo "SERVER=${{secrets.DB_HOST_DEV}}" > publish/.env
-          echo "USER_ID=${{secrets.DB_DEV_USERNAME}}" >> publish/.env
-          echo "PASSWORD=${{secrets.DB_DEV_PASSWORD }}" >> publish/.env
-          echo "DATABASE=codeLearningDB" >> publish/.env
-          echo "PORT=${{secrets.DB_PORT}}" >> publish/.env
 
       - name: Package application
         run: |
