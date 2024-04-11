@@ -55,7 +55,7 @@ namespace CodeLearningSpectaclesAPI.Controllers
         // PUT: api/Profilelanguageconstructs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProfilelanguageconstruct(int id, Profilelanguageconstruct profilelanguageconstruct)
+        public async Task<IActionResult> PutProfilelanguageconstruct(int id, [FromBody] Profilelanguageconstruct profilelanguageconstruct)
         {
             if (id != profilelanguageconstruct.Profilelanguageconstructid)
             {
