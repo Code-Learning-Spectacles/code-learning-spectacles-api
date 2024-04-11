@@ -1,4 +1,4 @@
-name: "Deploy API"
+name: Deploy API
 
 on:
   workflow_dispatch:
@@ -44,16 +44,22 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Validate Identity with AWS
-        working-directory: ./infrastructure
         run: aws sts get-caller-identity
+
+      - name: Package application
+        run: |
+          cd ./CodeLearningSpectaclesAPI/publish
+          zip -r ../CodeLearningSpectaclesAPI.zip .
+          cd ..
+          mv CodeLearningSpectaclesAPI.zip ../CodeLearningSpectaclesAPI.zip
 
       - name: Upload application bundle to S3
         run: |
-          aws s3 cp ./CodeLearningSpectaclesAPI/publish s3://code-learning-state-bucket/ --recursive
+          aws s3 cp ./CodeLearningSpectaclesAPI.zip s3://code-learning-state-bucket/ --recursive
 
       - name: Trigger Elastic Beanstalk deployment
         run: |
-          aws elasticbeanstalk update-environment --application-name code-learning-api --environment-name production  --region eu-west-1 --version-label <version-label>
+          aws elasticbeanstalk update-environment --application-name code-learning-api --environment-name production  --region eu-west-1 --version-label 2.0.1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
