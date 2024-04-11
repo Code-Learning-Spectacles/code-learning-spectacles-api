@@ -39,11 +39,11 @@ jobs:
       - name: Update Release with .env
         working-directory: "./CodeLearningSpectaclesAPI"
         run: |
-          echo "SERVER=${{secrets.DB_HOST_DEV}}" > publish/.env
-          echo "USER_ID=${{secrets.DB_DEV_USERNAME}}" >> publish/.env
-          echo "PASSWORD=${{secrets.DB_DEV_PASSWORD }}" >> publish/.env
+          echo "SERVER=${{secrets.SERVER}}" > publish/.env
+          echo "USER_ID=${{secrets.USER_ID}}" >> publish/.env
+          echo "PASSWORD=${{secrets.PASSWORD }}" >> publish/.env
           echo "DATABASE=codeLearningDB" >> publish/.env
-          echo "PORT=${{secrets.DB_PORT}}" >> publish/.env
+          echo "PORT=${{secrets.PORT}}" >> publish/.env
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
