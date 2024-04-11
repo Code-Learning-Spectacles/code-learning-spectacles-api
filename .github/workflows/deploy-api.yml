@@ -60,7 +60,7 @@ jobs:
 
       - name: Trigger Elastic Beanstalk deployment
         run: |
-          aws elasticbeanstalk update-environment --application-name CodeLearningSpectaclesAPI --environment-name APIDeployment  --region eu-west-1 --version-label v4
+          aws elasticbeanstalk update-environment --application-name CodeLearningSpectaclesAPI --environment-name APIDeployment  --region eu-west-1 --version-label v5
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
