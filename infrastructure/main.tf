@@ -228,3 +228,13 @@ resource "aws_elastic_beanstalk_environment" "production_environment" {
     value       = var.DB_PORT
   }
 }
+
+
+# Add output blocks here
+output "environment_name" {
+  value = aws_elastic_beanstalk_environment.production_environment.name
+}
+
+output "application_name" {
+  value = aws_elastic_beanstalk_application.app.name
+}

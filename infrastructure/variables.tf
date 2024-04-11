@@ -15,3 +15,16 @@ variable "AWS_REGION" {
   type = string
   sensitive = true
 }
+
+
+variable "DB_PORT" {
+  description = "Database port"
+  type = string
+  sensitive = true
+}
+
+variable "AWS_RDS_ENDPOINT" {
+  description = "Database Endpoint"
+  type = string
+  sensitive = true
+}

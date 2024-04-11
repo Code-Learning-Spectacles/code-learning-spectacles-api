@@ -17,7 +17,6 @@ namespace CodeLearningSpectaclesAPI
       // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
       builder.Services.AddEndpointsApiExplorer();
       builder.Services.AddSwaggerGen();
-
       builder.Services.AddDbContext<CodeLearningDbContext>(options => options.UseNpgsql(
            "Server=" + "code-learning-postgres-db.c7klvipobgy8.eu-west-1.rds.amazonaws.com"
            + ";Port=" + "5432"

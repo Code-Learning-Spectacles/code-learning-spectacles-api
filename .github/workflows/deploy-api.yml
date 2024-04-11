@@ -19,6 +19,7 @@ jobs:
       TF_VAR_DB_USERNAME: ${{ secrets.DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       TF_VAR_DB_PORT: ${{ secrets.DB_PORT }}
+      DB_NAME: ${{ secrets.DB_NAME }}
     defaults:
       run:
         shell: bash
@@ -46,27 +47,37 @@ jobs:
         working-directory: ./infrastructure
         run: aws sts get-caller-identity
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Initialize Terraform
-        id: init
-        working-directory: ./infrastructure
-        run: terraform init
-
-      - name: Generate infrastructure plan
-        id: plan
-        working-directory: ./infrastructure
-        run: terraform plan -out=.tfplan
-
-      - name: Apply infrastructure plan
-        id: apply
-        working-directory: ./infrastructure
-        run: terraform apply .tfplan
-
-      - name: Create new version
-        id: new-version
+      - name: Package application
         run: |
-          version_label="app-$(date +'%Y%m%d%H%M%S')"
-          aws elasticbeanstalk create-application-version --application-name beantastic-api --version-label "$version_label" --region eu-west-1 --source-bundle S3Bucket="beantastic-beanstalk-bucket",S3Key="beanstalk-api.jar"
-          aws elasticbeanstalk update-environment --application-name beantastic-api --environment-name production  --region eu-west-1 --version-label "$version_label"
+          cd ./CodeLearningSpectaclesAPI/publish
+          zip -r CodeLearningSpectaclesAPI.zip .
+          mv CodeLearningSpectaclesAPI.zip ../../
+          cd ../..
+          
+      - name: Upload application bundle to S3
+        run: |
+          aws s3 cp CodeLearningSpectaclesAPI.zip s3://code-learning-state-bucket/
+
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v3
+
+      # - name: Initialize Terraform
+      #   id: init
+      #   working-directory: ./infrastructure
+      #   run: terraform init
+
+      # # - name: Generate infrastructure plan
+      # #   id: plan
+      # #   working-directory: ./infrastructure
+      # #   run: terraform plan -out=.tfplan
+
+      # - name: Apply infrastructure plan
+      #   id: apply
+      #   working-directory: ./infrastructure
+      #   run: terraform apply 
+
+      - name: Trigger Elastic Beanstalk deployment
+        run: |
+          aws elasticbeanstalk update-environment --application-name CodeLearningSpectaclesAPI --environment-name APIDeployment  --region eu-west-1 
+
+    
