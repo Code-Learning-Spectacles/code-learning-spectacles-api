@@ -34,7 +34,7 @@ jobs:
 
       - name: Build and Publish
         working-directory: "./CodeLearningSpectaclesAPI"
-        run: dotnet publish -c Release -o publish
+        run: dotnet publish -c Release -o publish && mkdir -p publish
 
       - name: Update Release with .env
         run: |
