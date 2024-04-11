@@ -58,26 +58,26 @@ jobs:
         run: |
           aws s3 cp CodeLearningSpectaclesAPI.zip s3://code-learning-state-bucket/
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v3
 
-      - name: Initialize Terraform
-        id: init
-        working-directory: ./infrastructure
-        run: terraform init
-
-      # - name: Generate infrastructure plan
-      #   id: plan
+      # - name: Initialize Terraform
+      #   id: init
       #   working-directory: ./infrastructure
-      #   run: terraform plan -out=.tfplan
+      #   run: terraform init
 
-      - name: Apply infrastructure plan
-        id: apply
-        working-directory: ./infrastructure
-        run: terraform apply 
+      # # - name: Generate infrastructure plan
+      # #   id: plan
+      # #   working-directory: ./infrastructure
+      # #   run: terraform plan -out=.tfplan
 
-      - name: Trigger Elastic Beanstalk deployment
-        run: |
-          aws elasticbeanstalk update-environment --application-name code-learning-api --environment-name production  --region eu-west-1 
+      # - name: Apply infrastructure plan
+      #   id: apply
+      #   working-directory: ./infrastructure
+      #   run: terraform apply 
+
+      # - name: Trigger Elastic Beanstalk deployment
+      #   run: |
+      #     aws elasticbeanstalk update-environment --application-name code-learning-api --environment-name production  --region eu-west-1 
 
     
