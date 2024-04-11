@@ -42,12 +42,23 @@ namespace CodeLearningSpectaclesAPI.Controllers
             return Ok(languageconstruct);
         }
 
-        // GET: api/Languageconstructs/ByLanguage/5
+        // GET: api/Languageconstructs/getByLanguage/5
         [HttpGet("getByLanguage/{languageId}")]
         public async Task<ActionResult<IEnumerable<Languageconstruct>>> GetLanguageconstructsByLanguage(int languageId)
         {
             var languageConstructs = await _context.Languageconstructs
                                                 .Where(l => l.Codinglanguageid == languageId)
+                                                .ToListAsync();
+            return Ok(languageConstructs);
+        }
+
+        // GET: api/Languageconstructs/getByLanguage/getByConstructId/3/5
+        [HttpGet("getByLanguage/getByConstructId/{languageId}/{constructId}")]
+        public async Task<ActionResult<IEnumerable<Languageconstruct>>> GetLanguageconstructsByLanguageByConstructId(int languageId, int constructId)
+        {
+            var languageConstructs = await _context.Languageconstructs
+                                                .Where(l => l.Codinglanguageid == languageId)
+                                                .Where(c => c.Codeconstructid == constructId)
                                                 .ToListAsync();
             return Ok(languageConstructs);
         }

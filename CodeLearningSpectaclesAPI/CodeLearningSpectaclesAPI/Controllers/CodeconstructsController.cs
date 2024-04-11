@@ -49,6 +49,13 @@ namespace CodeLearningSpectaclesAPI.Controllers
             return Ok(codeconstruct);
         }
 
+        [HttpGet("getByConstructType/{constructTypeId}")]
+        public async Task<ActionResult<Codeconstruct>> GetCodeConstructByConstructType(int constructTypeId)
+        {
+            var codeconstruct = await _context.Codeconstructs.Where(c => c.Constructtypeid == constructTypeId).ToListAsync();
+            return Ok(codeconstruct);
+        }
+
         // PUT: api/Codeconstructs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
