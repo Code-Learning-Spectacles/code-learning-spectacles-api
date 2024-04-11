@@ -44,6 +44,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Validate Identity with AWS
+        working-directory: ./infrastructure
         run: aws sts get-caller-identity
 
       - name: Upload application bundle to S3
