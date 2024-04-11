@@ -76,8 +76,8 @@ jobs:
       #   working-directory: ./infrastructure
       #   run: terraform apply 
 
-      # - name: Trigger Elastic Beanstalk deployment
-      #   run: |
-      #     aws elasticbeanstalk update-environment --application-name code-learning-api --environment-name production  --region eu-west-1 
+      - name: Trigger Elastic Beanstalk deployment
+        run: |
+          aws elasticbeanstalk update-environment --application-name CodeLearningSpectaclesAPI --environment-name APIDeployment  --region eu-west-1 
 
     
