@@ -1,0 +1,13 @@
+
+{
+    "region" : "eu-west-1",
+    "configuration" : "Debug",
+    "framework"     : "net8.0",
+    "self-contained" : true,
+    "application"    : "CodeLearningSpectaclesAPI",
+    "environment"    : "APIDeployment",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "",
+    "proxy-server"         : "nginx"
+}
