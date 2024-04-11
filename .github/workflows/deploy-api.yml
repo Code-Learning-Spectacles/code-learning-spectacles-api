@@ -91,14 +91,14 @@ jobs:
       - name: Trigger Elastic Beanstalk deployment
         run: |
           aws elasticbeanstalk create-application-version \
-            --application-name API \
+            --application-name code \
             --version-label ${{ steps.generate_version_label.outputs.version_label }} \
             --source-bundle S3Bucket="code-learning-state-bucket",S3Key="CodeLearningSpectaclesAPI.zip" \
             --region eu-west-1
       
           aws elasticbeanstalk update-environment \
-            --application-name API \
-            --environment-name API-env \
+            --application-name code \
+            --environment-name Code-env \
             --version-label ${{ steps.generate_version_label.outputs.version_label }} \
             --region eu-west-1
       # - name: Trigger Elastic Beanstalk deployment
