@@ -37,6 +37,7 @@ jobs:
         run: dotnet publish -c Release -o publish && mkdir -p publish
 
       - name: Update Release with .env
+        working-directory: "./CodeLearningSpectaclesAPI"
         run: |
           echo "SERVER=${{secrets.DB_HOST_DEV}}" > publish/.env
           echo "USER_ID=${{secrets.DB_DEV_USERNAME}}" >> publish/.env
