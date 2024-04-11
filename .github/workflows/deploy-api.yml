@@ -66,7 +66,11 @@ jobs:
       - name: Upload application bundle to S3
         run: |
           aws s3 cp CodeLearningSpectaclesAPI.zip s3://code-learning-state-bucket/
-
+        
+      - name: Generate version label
+        id: generate_version_label
+        run: echo "::set-output name=version_label::$(date +'%Y%m%d%H%M%S')"
+        
       # - name: Setup Terraform
       #   uses: hashicorp/setup-terraform@v3
 
@@ -84,9 +88,21 @@ jobs:
       #   id: apply
       #   working-directory: ./infrastructure
       #   run: terraform apply 
-
       - name: Trigger Elastic Beanstalk deployment
         run: |
-          aws elasticbeanstalk update-environment --application-name CodeLearningSpectaclesAPI --environment-name APIDeployment  --region eu-west-1 
+          aws elasticbeanstalk create-application-version \
+            --application-name API \
+            --version-label ${{ steps.generate_version_label.outputs.version_label }} \
+            --source-bundle S3Bucket="code-learning-state-bucket",S3Key="CodeLearningSpectaclesAPI.zip" \
+            --region eu-west-1
+      
+          aws elasticbeanstalk update-environment \
+            --application-name API \
+            --environment-name API-env \
+            --version-label ${{ steps.generate_version_label.outputs.version_label }} \
+            --region eu-west-1
+      # - name: Trigger Elastic Beanstalk deployment
+      #   run: |
+      #     aws elasticbeanstalk update-environment --application-name API --environment-name API-env  --region eu-west-1 
 
     
