@@ -78,4 +78,4 @@ jobs:
 
       - name: Trigger Elastic Beanstalk deployment
         run: |
-          aws elasticbeanstalk update-environment --application-name code-learning-api --environment-name production  --region eu-west-1 --version-label 2.0.1
+          aws elasticbeanstalk update-environment --application-name code-learning-api --environment-name APIDeployment  --region eu-west-1 --version-label 2.0.1
