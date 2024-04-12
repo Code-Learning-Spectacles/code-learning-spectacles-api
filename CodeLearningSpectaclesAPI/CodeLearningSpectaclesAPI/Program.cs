@@ -38,11 +38,11 @@ namespace CodeLearningSpectaclesAPI
       app.UseAuthorization();
 
       //// Include authentication middleware for api
-      //app.UseWhen(x => (x.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase)),
-      //      builder =>
-      //      {
-      //          builder.UseMiddleware<RequestFilter>();
-      //      });
+      app.UseWhen(x => (x.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase)),
+           builder =>
+           {
+               builder.UseMiddleware<RequestFilter>();
+           });
 
             app.MapControllers();
 
