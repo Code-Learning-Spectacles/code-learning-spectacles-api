@@ -12,17 +12,17 @@ namespace CodeLearningSpectaclesAPI
       var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-      DotNetEnv.Env.Load();
+      // DotNetEnv.Env.Load();
       builder.Services.AddControllers();
       // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
       builder.Services.AddEndpointsApiExplorer();
       builder.Services.AddSwaggerGen();
       builder.Services.AddDbContext<CodeLearningDbContext>(options => options.UseNpgsql(
-        "Server=" + Environment.GetEnvironmentVariable("SERVER")
-        + ";Port=" + Environment.GetEnvironmentVariable("PORT")
-        + ";User Id=" + Environment.GetEnvironmentVariable("USER_ID")
-        + ";Password=" + Environment.GetEnvironmentVariable("PASSWORD")
-        + ";Database=" + Environment.GetEnvironmentVariable("DATABASE") + ";"
+           "Server=" + "code-learning-postgres-db.c7klvipobgy8.eu-west-1.rds.amazonaws.com"
+           + ";Port=" + "5432"
+           + ";User Id=" + "CodeLearningSpectacles"
+           + ";Password=" + "topsecretpassword"
+           + ";Database=" + "codeLearningDB" + ";"
       ));
 
             var app = builder.Build();
